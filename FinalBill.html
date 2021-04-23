@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Bill details</title>
+<style>
+   .a{
+     width:300px;
+     margin:auto;
+     margin-top:150px;
+     padding:90px;
+     border-radius:22px;
+     background:rgb(23, 135, 226);
+  }    
+  body{
+   
+         background-color: rgb(27, 216, 90);
+         }
+
+
+</style>
+</head>
+<body >
+<div class="a">
+
+        <h1>Booking SuccessFully<br>Your Booking Details</h1>
+        <label>Your bill amount is:</label><br/>
+        <input type="text" id="Bill"><br/>
+        <label>Your GST is :</label><br/>
+        <input type = "text" id="GST"><br/>
+        <label>Your Total Bill is:</label><br/>
+        <input type = "text" id = "TotalFare"><br/><br/>
+        <button onclick="TotalBill()" class="finalButton">Submit</button>
+
+        <div/>
+       
+<script>
+
+    function TotalBill(){                               
+        let Result = window.location.search.substr(6);       
+        Result = parseFloat(Result);
+        Result = Math.round(Result);                               
+        Result = Math.abs(Result);
+        let gst =(Result*7)/100.0;                                                    
+        let total = Result + gst;                             
+        document.querySelector("#Bill").value=Result;          
+        document.querySelector("#GST").value = gst;      
+        document.querySelector("#TotalFare").value = total;   
+      
+}
+
+</script>
+</body>
+</html>

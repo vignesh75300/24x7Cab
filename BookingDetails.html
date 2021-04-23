@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="ISO-8859-1">
+	<title>Cab Booking</title>
+	<style>
+			body{
+					
+					text-align: center;
+					background-color: blueviolet;
+			}
+			
+	</style>
+</head>
+<body >
+
+	<form onsubmit=BillAmount()>
+	<h2>Select Your Cab</h2>
+	<select name="cabtype" id="selectCab" required>                  
+			<option disabled>Select Cab Type</option>                                      
+			<option id="selectCab" value="MICRO">MICRO</option>
+			<option id="selectCab" value="MINI">MINI</option>
+			<option id="selectCab" value="PRIME">PRIME</option>
+    </select>
+
+			
+	<label>
+	<h2>Enter Your Killometer:</h2>
+	</label>
+	<input align=center type="number" id="Kilometer" min=1 placeholder="Enter Km" required> </input>
+	 <br />
+	<br>
+     <label>Senior Citizen :</label><br/>
+	  <input type = "checkbox" id = "seniorcitizen" name="seniorcitizen">
+	  <br />
+	  <br>
+	<label>Select Your Gender</label>
+	 <br/>
+      <input type="radio" name="gender" value="M" id="Male">Male</input>
+	  <br />
+	<input type="radio" name="gender" value="F" id="Female">Female</input>
+	 <br />
+	 <input type="radio" name="gender" value="O" id="Others">Others</input>
+	 <br />
+		
+	<h1>Booking</h1>
+	<label><h2>Enter Your Journey Date :</h2></label>
+	<br />
+	<input type="date" name="JourneyDate" id="JourneyDate" required>
+	<br />
+	<br />
+	<label><h2>Enter Your PickUp Time :</h2></label>
+	<br />
+	<input type="time" name="PickUpTime" id="PickUpTime" required>
+	<br/>
+	<br/>
+	<button class="BookingButton">Submit</button>
+	<br/>
+	<br />
+	</form>
+			
+	<script>
+		function DateFind() {
+			let today = new Date();								    //To get Current date and convert date into string type
+			let CurrentDate = today.toJSON().substring(0,10);		
+
+			let endDate = new Date();							 
+			 endDate.setDate(endDate.getDate()+7);				                 //To set maximum date from current(next 7days)
+			let EndDate = endDate.toJSON().substring(0,10);                              
+			document.querySelector("#JourneyDate").setAttribute("value", CurrentDate);		//To set default date(current date)
+			document.querySelector("#JourneyDate").setAttribute("min", CurrentDate);			//To select minimum date 
+			document.querySelector("#JourneyDate").setAttribute("max", EndDate);		//To select maximum date
+
+		}
+
+		DateFind();
+
+		function BillAmount() {
+			event.preventDefault();
+			let cabtype = document.querySelector("#selectCab").value;              //To get cab choice from user
+			let kilometer = document.querySelector("#Kilometer").value;		//    To get destination in kilometer from user
+			let seniorcitizen = document.querySelector("#seniorcitizen");			//To get Senior Citizen or not 			
+			let pickuptime = document.querySelector("#PickUpTime").value;				//To get pickuptime from user
+			pickuptime = pickuptime.substr(0, 2);										//To get the hours
+			pickuptime = parseInt(pickuptime);											//To convert string to integer
+			let Fare;
+			if (cabtype == "MICRO") {												//To calculate amount for the cab type
+				Fare = 10 * kilometer;
+			}
+			if (cabtype == "MINI") {
+				Fare = 15 * kilometer;
+			}
+			if (cabtype == "PRIME") {
+				Fare= 20 * kilometer;
+			}
+
+			if (pickuptime < 19 && pickuptime >= 17) {									//To check whether peak hours or not
+				Fare = Fare + (Fare* 0.0125);                              //1.25% will be increased
+				alert("Your PickUp Time is peak hours");    
+			}
+
+			if (seniorcitizen.checked) {								//To check whether senior citizen or not
+				Fare = Fare/ 2.0;                   // 50% will be decreased 
+				alert("You are senior citizen");
+			}
+			window.location.href = "FinalBill.html?Fare=" + Fare; 
+		}
+	</script>
+</body>
+
+</html>
